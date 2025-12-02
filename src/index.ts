@@ -44,5 +44,9 @@ export type { KakaoButtonProps, NaverButtonProps, ButtonGroupProps } from '@/ui'
 // Types
 export type { KAuthUser, KAuthProvider } from '@/types';
 
+// Errors
+export { KAuthError, createError, ERROR_CODES } from '@/errors';
+export type { KAuthErrorOptions, ErrorCode } from '@/errors';
+
 // Utils
 export { cn } from '@/utils/cn';
