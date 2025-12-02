@@ -14,8 +14,10 @@
 ## 설치
 
 ```bash
-npm install k-auth next-auth
+npm install k-auth next-auth@beta
 ```
+
+> next-auth v5 기준으로 동작합니다.
 
 ## 빠른 시작
 
@@ -183,7 +185,7 @@ AUTH_SECRET=your_random_secret_key
 
 - Next.js 14+
 - React 18+
-- next-auth 5+
+- next-auth 5 (beta)
 
 ## 라이센스
 
