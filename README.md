@@ -2,9 +2,9 @@
 
 [![npm version](https://img.shields.io/npm/v/@relkimm/k-auth.svg)](https://www.npmjs.com/package/@relkimm/k-auth)
 [![npm downloads](https://img.shields.io/npm/dm/@relkimm/k-auth.svg)](https://www.npmjs.com/package/@relkimm/k-auth)
-[![license](https://img.shields.io/npm/l/@relkimm/k-auth.svg)](https://github.com/relkimm/k-auth/blob/main/LICENSE)
+[![license](https://img.shields.io/npm/l/@relkimm/k-auth.svg)](https://opensource.org/licenses/MIT)
 
-Next.js에서 카카오, 네이버 로그인을 가장 쉽게 구현하는 방법.
+Next.js에서 카카오·네이버 로그인을 구현하는 인증 라이브러리.
 
 ## 특징
 
@@ -16,8 +16,10 @@ Next.js에서 카카오, 네이버 로그인을 가장 쉽게 구현하는 방�
 ## 설치
 
 ```bash
-npm install @relkimm/k-auth
+npm install @relkimm/k-auth next-auth@5.0.0-beta.30
 ```
+
+예제에서 사용하는 `next-auth`는 K-Auth의 의존성과 같은 v5 beta 버전입니다.
 
 ## 빠른 시작
 
@@ -50,13 +52,20 @@ export const { GET, POST } = handlers;
 ### 3. 로그인 버튼
 
 ```tsx
-import { Button } from '@relkimm/k-auth/ui';
-import { signIn } from '@/auth';
+// app/login/login-buttons.tsx
+'use client';
 
-<Button.Group>
-  <Button.Kakao onClick={() => signIn('kakao')} />
-  <Button.Naver onClick={() => signIn('naver')} />
-</Button.Group>
+import { Button } from '@relkimm/k-auth/ui';
+import { signIn } from 'next-auth/react';
+
+export default function LoginButtons() {
+  return (
+    <Button.Group>
+      <Button.Kakao onClick={() => signIn('kakao')} />
+      <Button.Naver onClick={() => signIn('naver')} />
+    </Button.Group>
+  );
+}
 ```
 
 ### 4. 세션 확인
@@ -113,19 +122,34 @@ KAuth({
 
 ## 구글/애플 추가
 
+다른 Provider와 함께 사용할 때는 내장 Kakao/Naver Provider를 NextAuth에 직접 전달합니다.
+
 ```typescript
+// auth.ts
+import NextAuth from 'next-auth';
+import { Kakao, Naver } from '@relkimm/k-auth/providers';
 import Google from 'next-auth/providers/google';
 import Apple from 'next-auth/providers/apple';
 
-KAuth({
-  kakao: { ... },
-  naver: { ... },
-  nextAuthConfig: {
-    providers: [
-      Google({ clientId: '...', clientSecret: '...' }),
-      Apple({ clientId: '...', clientSecret: '...' }),
-    ],
-  },
+export const { handlers, auth, signIn, signOut } = NextAuth({
+  providers: [
+    Kakao({
+      clientId: process.env.KAKAO_CLIENT_ID!,
+      clientSecret: process.env.KAKAO_CLIENT_SECRET!,
+    }),
+    Naver({
+      clientId: process.env.NAVER_CLIENT_ID!,
+      clientSecret: process.env.NAVER_CLIENT_SECRET!,
+    }),
+    Google({
+      clientId: process.env.GOOGLE_CLIENT_ID!,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
+    }),
+    Apple({
+      clientId: process.env.APPLE_CLIENT_ID!,
+      clientSecret: process.env.APPLE_CLIENT_SECRET!,
+    }),
+  ],
 });
 ```
 
@@ -158,7 +182,7 @@ AUTH_SECRET=  # openssl rand -base64 32
 
 ## 문서
 
-자세한 사용법은 [문서 사이트](https://github.com/relkimm/k-auth)를 참고하세요.
+자세한 사용법은 [README](https://github.com/relkimm/k-auth)를 참고하세요.
 
 - [빠른 시작](https://github.com/relkimm/k-auth#빠른-시작)
 - [버튼 컴포넌트](https://github.com/relkimm/k-auth#버튼)
