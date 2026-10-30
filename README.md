@@ -16,10 +16,22 @@ Next.js에서 카카오·네이버 로그인을 구현하는 인증 라이브러
 ## 설치
 
 ```bash
-npm install @relkimm/k-auth next-auth@5.0.0-beta.30
+npm install @relkimm/k-auth next-auth@5.0.0-beta.32
 ```
 
 예제에서 사용하는 `next-auth`는 K-Auth의 의존성과 같은 v5 beta 버전입니다.
+
+## 개발 검증과 보안 경계
+
+Node.js 24에서 `npm ci` 후 `npm run check`로 lint·타입·테스트·빌드·운영 의존성 보안 검사를 실행합니다.
+React 18 개발 환경의 ReactDOM 버전을 함께 고정하고, 기존 manifest와 lockfile 차이를 정리했습니다.
+Auth.js의 provider 간 check-cookie 혼동 등 보안 권고를 반영해 next-auth를 beta.32로 고정합니다.
+[공식 보안 권고](https://github.com/nextauthjs/next-auth/security/advisories/GHSA-x445-f3h2-j279).
+
+실제 SDK handler 테스트는 CSRF 누락·위조 callback·미인증 session·동일 이메일의 자동 계정 연결 거부를 확인합니다.
+OAuth endpoint와 adapter는 합성 fixture이므로 실제 Kakao/Naver 로그인·소비 제품의 세션 폐기·로그아웃·탈퇴 검증을 대신하지 않습니다.
+계정 소유권·명시적 연결·데이터 삭제 정책과 실제 provider 설정은 소비 제품에서 검증합니다.
+업그레이드는 lockfile과 함께 명시적으로 검토하며, 복구는 이전 소스·manifest·lockfile을 함께 복원합니다.
 
 ## 빠른 시작
 
