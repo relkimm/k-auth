@@ -35,7 +35,8 @@
     "test:watch": "vitest",
     "lint": "eslint src/",
     "typecheck": "tsc --noEmit",
-    "prepublishOnly": "npm run build"
+    "prepublishOnly": "npm run build",
+    "check": "npm run lint && npm run typecheck && npm test && npm run build && npm audit --omit=dev"
   },
   "keywords": [
     "next-auth",
@@ -75,18 +76,22 @@
     "react-dom": "^18.0.0 || ^19.0.0"
   },
   "devDependencies": {
+    "@eslint/js": "^9.39.5",
     "@testing-library/react": "^16.3.0",
     "@types/node": "^20.10.0",
     "@types/react": "^18.2.0",
+    "eslint": "^9.39.5",
     "jsdom": "^27.2.0",
     "react": "^18.2.0",
+    "react-dom": "^18.3.1",
     "tsup": "^8.0.0",
     "typescript": "^5.3.0",
+    "typescript-eslint": "^8.72.1",
     "vitest": "^4.0.14"
   },
   "dependencies": {
     "clsx": "^2.1.0",
-    "next-auth": "5.0.0-beta.30",
+    "next-auth": "5.0.0-beta.32",
     "tailwind-merge": "^2.2.0"
   }
 }

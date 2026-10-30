@@ -5,11 +5,12 @@ export default defineConfig({
   test: {
     environment: 'jsdom',
     globals: true,
+    server: { deps: { inline: ['next-auth'] } },
     include: ['src/**/*.test.{ts,tsx}'],
   },
   resolve: {
     alias: {
-      '@': resolve(__dirname, './src'),
+      '@': resolve(import.meta.dirname, './src'),
     },
   },
 });

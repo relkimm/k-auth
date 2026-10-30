@@ -5,7 +5,7 @@
 ## 패키지 정보
 
 - **이름**: `@relkimm/k-auth`
-- **의존성**: next-auth 5.0.0-beta.30 (v5)
+- **의존성**: next-auth 5.0.0-beta.32 (v5)
 
 ## 명령어
 
